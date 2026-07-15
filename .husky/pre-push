@@ -1,0 +1,5 @@
+pnpm run lint
+pnpm run typecheck
+pnpm run build
+pnpm run test:coverage
+pnpm run secretlint

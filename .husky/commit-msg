@@ -1,0 +1,10 @@
+commit_msg_file="$1"
+commit_msg=$(head -n1 "$commit_msg_file")
+pattern="^[A-Z]+-[0-9]+: .+"
+
+if ! echo "$commit_msg" | grep -qE "$pattern"; then
+	echo "Commit message does not match required format: TICKET-ID: subject"
+	echo "  Example: PROJ-123: add login form"
+	echo "  Got:     $commit_msg"
+	exit 1
+fi

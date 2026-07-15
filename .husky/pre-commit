@@ -1,0 +1,15 @@
+branch_name=$(git rev-parse --abbrev-ref HEAD)
+branch_pattern="^(feature|fix|chore|hotfix|release|docs)/[A-Z]+-[0-9]+-[a-z0-9-]+$"
+protected_pattern="^(main|master|develop)$"
+
+if ! echo "$branch_name" | grep -qE "$protected_pattern"; then
+	if ! echo "$branch_name" | grep -qE "$branch_pattern"; then
+		echo "Branch name does not match required format: type/TICKET-ID-slug"
+		echo "  Types:   feature, fix, chore, hotfix, release, docs"
+		echo "  Example: feature/PROJ-123-add-login-form"
+		echo "  Got:     $branch_name"
+		exit 1
+	fi
+fi
+
+pnpm exec lint-staged
