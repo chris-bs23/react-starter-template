@@ -1,19 +1,12 @@
-import { QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { createRouter, RouterProvider } from "@tanstack/react-router";
+import { RouterProvider } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { AppProviders } from "@/app/providers";
+import { router } from "@/app/router";
+import { env } from "@/config/env";
 import "./index.css";
-import { queryClient } from "@/lib/query-client";
-import { routeTree } from "./routeTree.gen";
 
-const router = createRouter({ routeTree });
-
-declare module "@tanstack/react-router" {
-	interface Register {
-		router: typeof router;
-	}
-}
+document.title = env.VITE_APP_NAME;
 
 const rootElement = document.getElementById("root");
 if (!rootElement) {
@@ -22,9 +15,8 @@ if (!rootElement) {
 
 createRoot(rootElement).render(
 	<StrictMode>
-		<QueryClientProvider client={queryClient}>
+		<AppProviders>
 			<RouterProvider router={router} />
-			<ReactQueryDevtools initialIsOpen={false} />
-		</QueryClientProvider>
+		</AppProviders>
 	</StrictMode>,
 );

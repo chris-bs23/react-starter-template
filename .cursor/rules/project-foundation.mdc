@@ -1,0 +1,17 @@
+---
+description: Core conventions for this React enterprise starter
+alwaysApply: true
+---
+
+# Project foundation
+
+- Stack is fixed: React, TypeScript, pnpm, Biome, TanStack Router/Query, Zustand, Axios, Zod, Tailwind, shadcn.
+- Follow `docs/ARCHITECTURE.md`, `docs/PATTERNS.md`, and `AGENTS.md`.
+- Put domain code in `src/features/<domain>/` with a public `index.ts`.
+- Keep `src/routes` thin. Keep `src/components/ui` domain-agnostic.
+- Use `@/` imports. Use `apiClient` and `logger`. Validate env via `src/config/env.ts`.
+- Import features only through `@/features/<name>` (Biome-enforced).
+- Auth is plumbing (store + `requireAuth`); do not add demo login UIs.
+- Server data: TanStack Query (copy from `docs/PATTERNS.md` for the first endpoint).
+- Do not add ESLint/Prettier. Do not replace TanStack or Zustand without explicit approval.
+- Quality gate: `pnpm run verify` (never bare `pnpm ci`).

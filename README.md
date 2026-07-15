@@ -1,75 +1,85 @@
-# React + TypeScript + Vite
+# React Starter Template
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend **foundation / starter** for large enterprise React apps and AI-assisted development.
+It is intentionally thin: plumbing, conventions, and docs — not a demo product.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React 19 + TypeScript
+- Vite
+- pnpm
+- Biome
+- TanStack Router + TanStack Query
+- Zustand
+- Axios
+- Zod + React Hook Form
+- Tailwind CSS v4 + shadcn/ui
+- Vitest + Testing Library
+- Husky + lint-staged + Secretlint
 
-## React Compiler
+## Quick start
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+pnpm install
+cp .env.example .env.local
+pnpm dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Scripts
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+| Script | Purpose |
+| --- | --- |
+| `pnpm dev` | Local development server |
+| `pnpm build` | Typecheck + production build |
+| `pnpm typecheck` | TypeScript project build |
+| `pnpm lint` / `pnpm lint:fix` | Biome check / autofix |
+| `pnpm test` | Vitest watch mode |
+| `pnpm test:run` | Single test run |
+| `pnpm test:coverage` | Coverage with thresholds |
+| `pnpm secretlint` | Secret scanning |
+| `pnpm run verify` | Full local quality gate |
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Do not use bare `pnpm ci` for quality — that is pnpm clean-install.
 
+## What is intentionally empty
+
+- No sample IdP / login page (auth store + `requireAuth` only)
+- No live `useQuery` feature yet (provider + recipes in PATTERNS.md)
+- No MSW / E2E / Storybook until product needs them (see DECISIONS.md)
+
+## Documentation
+
+- [Architecture](./docs/ARCHITECTURE.md) — folder boundaries, state, networking, testing
+- [Patterns](./docs/PATTERNS.md) — copy-paste recipes for features, Query, forms, auth
+- [Deployment](./docs/DEPLOYMENT.md) — hosting headers, CSP, caching
+- [Security](./docs/SECURITY.md) — secrets, auth posture, XSS
+- [Decisions](./docs/DECISIONS.md) — adopted and deferred choices
+- [Contributing](./CONTRIBUTING.md) — local workflow, branch/commit rules
+- [AGENTS.md](./AGENTS.md) — instructions for AI coding agents
+
+## Project shape (short)
+
+```text
+src/
+  app/         # providers + router
+  components/  # ui primitives, layout, errors
+  config/      # validated environment
+  features/    # business domains
+  hooks/       # shared hooks
+  lib/         # api client, logger, helpers
+  routes/      # thin file-based routes
 ```
+
+## Quality gates
+
+Pre-push and CI enforce lint, typecheck, tests/coverage, secretlint, and production build.
+
+## Repository governance
+
+- CI quality gate: [`.github/workflows/ci.yml`](./.github/workflows/ci.yml)
+- Security scanning (CodeQL): [`.github/workflows/codeql.yml`](./.github/workflows/codeql.yml)
+- Dependency automation: [`.github/dependabot.yml`](./.github/dependabot.yml)
+- PR / issue templates and [`CODEOWNERS`](./.github/CODEOWNERS) live under `.github/`
+
+Replace `@your-org/...` placeholders in `CODEOWNERS` and the issue-template links
+with real teams before enabling branch protection.

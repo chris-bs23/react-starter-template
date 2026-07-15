@@ -1,0 +1,21 @@
+# Code ownership for review routing.
+# Replace the placeholder owners below with real GitHub teams/users before
+# enabling "Require review from Code Owners" in branch protection.
+#
+# Syntax: <path pattern>  <@owner> [<@owner> ...]
+# Later matches take precedence over earlier ones.
+
+# Default owner for everything.
+*                       @your-org/frontend-platform
+
+# Architecture, conventions, and agent instructions: require platform review.
+/docs/                  @your-org/frontend-platform
+/AGENTS.md              @your-org/frontend-platform
+/src/**/AGENTS.md       @your-org/frontend-platform
+/.cursor/               @your-org/frontend-platform
+
+# Tooling, CI, and security posture.
+/.github/               @your-org/frontend-platform
+/biome.json             @your-org/frontend-platform
+/tsconfig*.json         @your-org/frontend-platform
+/vite.config.ts         @your-org/frontend-platform
